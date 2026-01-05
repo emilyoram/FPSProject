@@ -10,7 +10,7 @@ const SENSITIVITY = 0.01
 
 @onready var bullet_spawn = $Head/Camera3D/BulletSpawn
 
-var bullet_scene = preload("res://bullet.tscn")
+var bullet_scene = preload("res://bullet/bullet.tscn")
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
