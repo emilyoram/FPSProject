@@ -1,0 +1,58 @@
+[gd_scene load_steps=5 format=3 uid="uid://dn8bc31570mkq"]
+
+[ext_resource type="Script" uid="uid://xrkigtn44ae8" path="res://play_button.gd" id="1_lti8b"]
+[ext_resource type="Script" uid="uid://b3obfw6lnfu6a" path="res://high_score.gd" id="2_ouk20"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_vsb4k"]
+font_size = 64
+
+[sub_resource type="LabelSettings" id="LabelSettings_mae5d"]
+font_size = 20
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PlayButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 504.0
+offset_top = 312.0
+offset_right = 659.0
+offset_bottom = 366.0
+action_mode = 0
+text = "Play"
+script = ExtResource("1_lti8b")
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 0
+offset_left = 376.0
+offset_top = 166.0
+offset_right = 806.0
+offset_bottom = 254.0
+text = "Zombie Game"
+label_settings = SubResource("LabelSettings_vsb4k")
+horizontal_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -2
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+mouse_filter = 2
+color = Color(0, 0.64705884, 0.53333336, 1)
+
+[node name="HighScore" type="Label" parent="."]
+layout_mode = 0
+offset_left = 518.0
+offset_top = 265.0
+offset_right = 644.0
+offset_bottom = 293.0
+text = "High Score: 0"
+label_settings = SubResource("LabelSettings_mae5d")
+script = ExtResource("2_ouk20")
+
+[connection signal="pressed" from="PlayButton" to="PlayButton" method="_on_pressed"]

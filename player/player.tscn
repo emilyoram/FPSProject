@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://dcq2nqv32xo6r"]
+[gd_scene load_steps=5 format=3 uid="uid://dcq2nqv32xo6r"]
 
 [ext_resource type="Script" uid="uid://df76yojjrfyut" path="res://player/player.gd" id="1_oul6g"]
 
@@ -6,6 +6,9 @@
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_oul6g"]
 size = Vector3(1, 1.9794922, 1.0428467)
+
+[sub_resource type="LabelSettings" id="LabelSettings_oul6g"]
+font_size = 48
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("camera", "head")]
 transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 0)
@@ -56,4 +59,18 @@ collision_mask = 2
 transform = Transform3D(0.99999464, 0, 0, 0, 1, 0, 0, 0, 0.99999464, 0, 0.068847656, 0.00042724048)
 shape = SubResource("BoxShape3D_oul6g")
 
+[node name="DiedLabel" type="Label" parent="."]
+visible = false
+offset_left = 464.0
+offset_top = 224.0
+offset_right = 679.0
+offset_bottom = 291.0
+text = "You died!"
+label_settings = SubResource("LabelSettings_oul6g")
+
+[node name="DeathTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
 [connection signal="body_entered" from="Detector" to="." method="_on_detector_body_entered"]
+[connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]

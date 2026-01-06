@@ -16,12 +16,17 @@ const STAMINA_CAPACITY = 200
 @onready var grenade_label := $GrenadeLabel
 @onready var bullet_spawn = $Head/Camera3D/BulletSpawn
 @onready var stamina_bar = $StaminaBar
+@onready var died_label = $DiedLabel
+@onready var death_timer = $DeathTimer
+
+signal player_died
 
 var bullet_scene = preload("res://objects/bullet.tscn")
 var grenade_scene = preload("res://objects/grenade.tscn")
 var ammo = AMMO_CAPACITY
 var grenades = GRENADE_CAPCITY
 var stamina = STAMINA_CAPACITY
+var dead = false
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -32,10 +37,10 @@ func _input(event):
 	if event.is_action_pressed("ui_cancel"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	# Fire a bullet
-	if event.is_action_pressed("click") and ammo > 0:
+	if event.is_action_pressed("click") and ammo > 0 and not dead:
 		fire_bullet()
 	# Throw a grenade
-	if event.is_action_pressed("grenade") and grenades > 0:
+	if event.is_action_pressed("grenade") and grenades > 0 and not dead:
 		throw_grenade()
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -50,12 +55,12 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta
 
 	# Handle jump.
-	if Input.is_action_just_pressed("jump") and is_on_floor():
+	if Input.is_action_just_pressed("jump") and is_on_floor() and not dead:
 		velocity.y = JUMP_VELOCITY
 
 	# If sprinting changes sprint to sprint modifier
 	var sprint = 1
-	if Input.is_action_pressed("sprint") and stamina > 0:
+	if Input.is_action_pressed("sprint") and stamina > 0 and not dead:
 		sprint = SPRINT_MODIFIER
 		stamina -= 1
 	else:
@@ -67,7 +72,7 @@ func _physics_process(delta: float) -> void:
 	# Get the input direction and handle the movement/deceleration.
 	var input_dir := Input.get_vector("left", "right", "forward", "back")
 	var direction := (head.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	if direction:
+	if direction and not dead:
 		velocity.x = direction.x * SPEED * sprint
 		velocity.z = direction.z * SPEED * sprint
 	else:
@@ -101,3 +106,10 @@ func reload_ammo():
 
 func _on_detector_body_entered(body: Node3D) -> void:
 	print("You died! RIP")
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	died_label.show()
+	death_timer.start()
+	player_died.emit()
+	
+func _on_death_timer_timeout() -> void:
+	get_tree().change_scene_to_file("res://menu.tscn")
