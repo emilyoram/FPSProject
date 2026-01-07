@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://dcq2nqv32xo6r"]
+[gd_scene load_steps=6 format=3 uid="uid://dcq2nqv32xo6r"]
 
 [ext_resource type="Script" uid="uid://df76yojjrfyut" path="res://player/player.gd" id="1_oul6g"]
+[ext_resource type="Texture2D" uid="uid://d4h6nyi7delcp" path="res://assets/reticle.png" id="2_rkbax"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7dm0k"]
 
@@ -71,6 +72,13 @@ label_settings = SubResource("LabelSettings_oul6g")
 [node name="DeathTimer" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = 545.0
+offset_top = 289.0
+offset_right = 609.0
+offset_bottom = 353.0
+texture = ExtResource("2_rkbax")
 
 [connection signal="body_entered" from="Detector" to="." method="_on_detector_body_entered"]
 [connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]

@@ -47,12 +47,21 @@ color = Color(0, 0.64705884, 0.53333336, 1)
 
 [node name="HighScore" type="Label" parent="."]
 layout_mode = 0
-offset_left = 518.0
+offset_left = 514.0
 offset_top = 265.0
-offset_right = 644.0
+offset_right = 640.0
 offset_bottom = 293.0
 text = "High Score: 0"
 label_settings = SubResource("LabelSettings_mae5d")
 script = ExtResource("2_ouk20")
 
+[node name="ResetHighScore" type="Button" parent="."]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 576.0
+offset_right = 162.0
+offset_bottom = 624.0
+text = "Reset High Score"
+
 [connection signal="pressed" from="PlayButton" to="PlayButton" method="_on_pressed"]
+[connection signal="pressed" from="ResetHighScore" to="HighScore" method="_on_reset_high_score_pressed"]

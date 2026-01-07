@@ -1,8 +1,8 @@
 [gd_scene load_steps=11 format=3 uid="uid://dh7ygg2t2lwdb"]
 
 [ext_resource type="PackedScene" uid="uid://dcq2nqv32xo6r" path="res://player/player.tscn" id="1_h2yge"]
+[ext_resource type="PackedScene" uid="uid://cbp5xku03unla" path="res://enemy/zombie_spawner.tscn" id="3_1bvp3"]
 [ext_resource type="Script" uid="uid://unjghcla1awi" path="res://score.gd" id="3_h2yge"]
-[ext_resource type="Script" uid="uid://cbub4yam3n0yc" path="res://enemy/zombie_spawner.gd" id="4_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://ikjt5bfvco7h" path="res://objects/ammo_box.tscn" id="4_lquwl"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ig7tw"]
@@ -150,13 +150,8 @@ offset_bottom = 42.0
 text = "Zombies Killed: 0"
 script = ExtResource("3_h2yge")
 
-[node name="ZombieSpawner" type="Node3D" parent="."]
+[node name="ZombieSpawner" parent="." instance=ExtResource("3_1bvp3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -60.823)
-script = ExtResource("4_1bvp3")
-
-[node name="SpawnTimer" type="Timer" parent="ZombieSpawner"]
-wait_time = 5.050000000000001
-autostart = true
 
 [node name="AmmoBox" parent="." instance=ExtResource("4_lquwl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5270896, 88.200066)
@@ -175,7 +170,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 74.22589, 0.5270896, -59.5241
 
 [connection signal="player_died" from="Player" to="Score" method="_on_player_died"]
 [connection signal="zombie_spawned" from="ZombieSpawner" to="Score" method="_on_zombie_spawner_zombie_spawned"]
-[connection signal="timeout" from="ZombieSpawner/SpawnTimer" to="ZombieSpawner" method="_on_spawn_timer_timeout"]
 [connection signal="body_entered" from="AmmoBox" to="AmmoBox" method="_on_body_entered"]
 [connection signal="body_entered" from="AmmoBox2" to="AmmoBox2" method="_on_body_entered"]
 [connection signal="body_entered" from="AmmoBox3" to="AmmoBox3" method="_on_body_entered"]

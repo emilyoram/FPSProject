@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://cbp5xku03unla"]
+
+[ext_resource type="Script" uid="uid://cbub4yam3n0yc" path="res://enemy/zombie_spawner.gd" id="1_lvbtu"]
+
+[node name="ZombieSpawner" type="Node3D"]
+script = ExtResource("1_lvbtu")
+
+[node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 5.050000000000001
+autostart = true
+
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
